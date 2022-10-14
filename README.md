@@ -1,4 +1,4 @@
-# flutter_ecommerce_app
+## Your Store
 - Ecommerce mobile app with many functionalities such as search for products by title and category, manage favorite items ,orders and cart.
 - Bloc design pattern used to manage app's business logic.
 ## App features
