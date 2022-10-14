@@ -18,6 +18,17 @@
 <br>
 8- Check internet connection status.
 
+### Packages used:
+  - sqflite
+  - path
+  - flutter_svg
+  - font_awesome_flutter
+  - flutter_bloc
+  - equatable
+  - connectivity_plus
+  - internet_connection_checker
+  - connectivity_wrapper
+
 ### To run the project
 <code> flutter pub get</code>
 <br/>
