@@ -13,11 +13,11 @@
 <br>
 5- Cart management.
 <br>
-6- Add/Remove product from favorite products list.
+6- Add/Remove products from the favorite products list.
 <br>
 7- Smooth animation between screens.
 <br>
-8- Check internet connection status.
+8- Check the internet connection status.
 
 ### Packages used:
   - sqflite
