@@ -33,104 +33,100 @@ class _SignInFormState extends State<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.7,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        child: Column(
-          children: [
-            const Align(
-              alignment: Alignment.topLeft,
-              child: Text("Login",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20)),
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  emailFormField(),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  passwordFormField(),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          CustomScaleTransition(
-                              nextPageUrl: ForgotPasswordScreen.routeName,
-                              nextPage: const ForgotPasswordScreen())),
-                      child: const Text(
-                        "Forgot Password?",
-                        style: TextStyle(
-                            color: primaryColor,
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  CustomButton(
-                    title: "Login",
-                    backgroundColor: primaryColor,
-                    forgroundColor: Colors.white,
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        // Check user Identity
-                        bool result = await _sqliteDbHelper.checkIdentity(
-                            email: email, password: password);
-                        if (result) {
-                          KeyboardUtil.hideKeyboard(context);
-                          Navigator.push(
-                              context,
-                              CustomScaleTransition(
-                                  nextPageUrl: HomeScreen.routeName,
-                                  nextPage: const HomeScreen()));
-                        } else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content:
-                                Text("Please check your email or password"),
-                            backgroundColor: Colors.black38,
-                          ));
-                        }
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  InkWell(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+      child: Column(
+        children: [
+          const Align(
+            alignment: Alignment.topLeft,
+            child: Text("Login",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20)),
+          ),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                emailFormField(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                passwordFormField(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: InkWell(
                     onTap: () => Navigator.push(
                         context,
                         CustomScaleTransition(
-                            nextPageUrl: SignUpScreen.routeName,
-                            nextPage: const SignUpScreen())),
+                            nextPageUrl: ForgotPasswordScreen.routeName,
+                            nextPage: const ForgotPasswordScreen())),
                     child: const Text(
-                      "Create an account?",
+                      "Forgot Password?",
                       style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.bold),
+                          color: primaryColor,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
-                ],
-              ),
-            )
-          ],
-        ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                CustomButton(
+                  title: "Login",
+                  backgroundColor: primaryColor,
+                  forgroundColor: Colors.white,
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      // Check user Identity
+                      bool result = await _sqliteDbHelper.checkIdentity(
+                          email: email, password: password);
+                      if (result) {
+                        KeyboardUtil.hideKeyboard(context);
+                        Navigator.push(
+                            context,
+                            CustomScaleTransition(
+                                nextPageUrl: HomeScreen.routeName,
+                                nextPage: const HomeScreen()));
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("Please check your email or password"),
+                          backgroundColor: Colors.black38,
+                        ));
+                      }
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      CustomScaleTransition(
+                          nextPageUrl: SignUpScreen.routeName,
+                          nextPage: const SignUpScreen())),
+                  child: const Text(
+                    "Create an account?",
+                    style: TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

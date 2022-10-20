@@ -30,6 +30,9 @@ class WelcomeBack extends StatelessWidget {
                 color: circleColor,
                 borderWidth: 2,
               )),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.02,
+          ),
           const Align(
             alignment: Alignment.center,
             child: Text(
