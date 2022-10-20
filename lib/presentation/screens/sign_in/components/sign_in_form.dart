@@ -188,3 +188,9 @@ class _SignInFormState extends State<SignInForm> {
     super.dispose();
   }
 }
+
+class ScreenArgs {
+  final String email;
+  final String password;
+  const ScreenArgs({required this.email, required this.password});
+}
