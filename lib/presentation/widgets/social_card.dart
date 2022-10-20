@@ -1,29 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:store/Utilities/size_config.dart';
-
+import 'package:flutter_svg/svg.dart';
+import 'package:store/constants/colors.dart';
 
 class SocialCard extends StatelessWidget {
-  final String? iconPath;
-  final GestureTapCallback? onTap;
-
-  const SocialCard({Key? key, required this.iconPath, this.onTap}) : super(key: key);
+  final String svgIconPath;
+  const SocialCard({Key? key, required this.svgIconPath}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: SizeConfig.getProportionateScreenWidth(10)),
-        padding: EdgeInsets.all(SizeConfig.getProportionateScreenWidth(12)),
-        height: SizeConfig.getProportionateScreenHeight(40),
-        width: SizeConfig.getProportionateScreenWidth(40),
-        decoration: const BoxDecoration(
-          color: Color(0xFFF5F6F9),
-          shape: BoxShape.circle
-        ),
-        child: SvgPicture.asset(iconPath!),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
+      width: MediaQuery.of(context).size.width * 0.1,
+      padding: const EdgeInsets.all(12),
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: socialCardBgColor,
       ),
+      child: SvgPicture.asset(svgIconPath),
     );
   }
 }

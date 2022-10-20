@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:store/constants/colors.dart';
 import 'package:store/constants/form_messages.dart';
+import 'package:store/presentation/screens/complete_profile/complete_profile.dart';
 import 'package:store/presentation/widgets/custom_button.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -58,8 +59,9 @@ class _SignUpFormState extends State<SignUpForm> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Email: $email \nPassword: $password ")));
+                  Navigator.pushNamed(context, CompleteProfileScreen.routeName,
+                      arguments:
+                          ScreenArgs(email: email!, password: password!));
                 }
               },
             ),

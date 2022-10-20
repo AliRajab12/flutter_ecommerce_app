@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:store/Utilities/keyboard_util.dart';
+import 'package:store/Utilities/sqfilte_helper.dart';
 import 'package:store/constants/colors.dart';
 import 'package:store/constants/form_messages.dart';
 import 'package:store/presentation/screens/forgot_password/forgot_password_screen.dart';
+import 'package:store/presentation/screens/home/home_screen.dart';
 import 'package:store/presentation/screens/sign_up/sign_up_screen.dart';
 import 'package:store/presentation/widgets/custom_button.dart';
+import 'package:store/presentation/widgets/custom_page_transition.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({Key? key}) : super(key: key);
@@ -13,6 +17,7 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
+  final SqliteDbHelper _sqliteDbHelper = SqliteDbHelper();
   final _formKey = GlobalKey<FormState>();
   final _emailFormFieldKey = GlobalKey<FormFieldState>();
   final _passwordFormFieldKey = GlobalKey<FormFieldState>();
@@ -60,10 +65,11 @@ class _SignInFormState extends State<SignInForm> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, ForgotPasswordScreen.routeName);
-                      },
+                      onTap: () => Navigator.push(
+                          context,
+                          CustomScaleTransition(
+                              nextPageUrl: ForgotPasswordScreen.routeName,
+                              nextPage: const ForgotPasswordScreen())),
                       child: const Text(
                         "Forgot Password?",
                         style: TextStyle(
@@ -81,12 +87,27 @@ class _SignInFormState extends State<SignInForm> {
                     backgroundColor: primaryColor,
                     forgroundColor: Colors.white,
                     width: MediaQuery.of(context).size.width * 0.85,
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        // Check user Identity
+                        bool result = await _sqliteDbHelper.checkIdentity(
+                            email: email, password: password);
+                        if (result) {
+                          KeyboardUtil.hideKeyboard(context);
+                          Navigator.push(
+                              context,
+                              CustomScaleTransition(
+                                  nextPageUrl: HomeScreen.routeName,
+                                  nextPage: const HomeScreen()));
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
                             content:
-                                Text("Email: $email \nPassword: $password ")));
+                                Text("Please check your email or password"),
+                            backgroundColor: Colors.black38,
+                          ));
+                        }
                       }
                     },
                   ),
@@ -94,8 +115,11 @@ class _SignInFormState extends State<SignInForm> {
                     height: MediaQuery.of(context).size.height * 0.03,
                   ),
                   InkWell(
-                    onTap: () =>
-                        Navigator.pushNamed(context, SignUpScreen.routeName),
+                    onTap: () => Navigator.push(
+                        context,
+                        CustomScaleTransition(
+                            nextPageUrl: SignUpScreen.routeName,
+                            nextPage: const SignUpScreen())),
                     child: const Text(
                       "Create an account?",
                       style: TextStyle(

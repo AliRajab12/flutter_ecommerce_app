@@ -3,6 +3,7 @@ import 'package:store/constants/colors.dart';
 import 'package:store/constants/text_style.dart';
 import 'package:store/presentation/screens/sign_in/sign_in_screen.dart';
 import 'package:store/presentation/widgets/custom_button.dart';
+import 'package:store/presentation/widgets/custom_page_transition.dart';
 
 class SplashScreenBody extends StatefulWidget {
   const SplashScreenBody({Key? key}) : super(key: key);
@@ -54,8 +55,11 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
             CustomButton(
               backgroundColor: Colors.white,
               forgroundColor: primaryColor,
-              onPressed: () =>
-                  Navigator.pushNamed(context, SignInScreen.routeName),
+              onPressed: () => Navigator.push(
+                  context,
+                  CustomScaleTransition(
+                      nextPageUrl: SignInScreen.routeName,
+                      nextPage: const SignInScreen())),
               title: "Get Started",
             ),
             const SizedBox(

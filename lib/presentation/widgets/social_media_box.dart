@@ -14,13 +14,13 @@ class SocialMediaBox extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const [
             SocialCard(
-              iconPath: "assets/icons/google.svg",
+              svgIconPath: "assets/icons/google.svg",
             ),
             SocialCard(
-              iconPath: "assets/icons/facebook.svg",
+              svgIconPath: "assets/icons/facebook.svg",
             ),
             SocialCard(
-              iconPath: "assets/icons/twitter.svg",
+              svgIconPath: "assets/icons/twitter.svg",
             ),
           ],
         ),
