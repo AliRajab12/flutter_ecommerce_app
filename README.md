@@ -1,6 +1,6 @@
 ## Your Store
 - Ecommerce mobile app with many functionalities such as search for products by title and category, manage favorite items ,orders and cart.
-- Bloc design pattern used to manage app's business logic.
+- BloC design pattern used to manage app's business logic.
 ## App features
 
 1- Authentication and Authorization.
