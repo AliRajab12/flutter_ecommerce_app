@@ -1,11 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/data/models/product.dart';
-
 import 'package:store/Utilities/size_config.dart';
 import 'package:store/constants/colors.dart';
-import 'package:store/presentation/bloc/favorite/favorite_bloc.dart';
 import 'package:store/presentation/screens/product_details/product_details_screen.dart';
 
 class ProductCard extends StatefulWidget {
@@ -74,11 +70,12 @@ class _ProductCardState extends State<ProductCard> {
               InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                      demoProducts
-                          .where((product) => (product.id == widget.product.id))
-                          .first.isFavourite = !widget.product.isFavourite;
-                    setState(() {});
-                    },
+                  demoProducts
+                      .where((product) => (product.id == widget.product.id))
+                      .first
+                      .isFavourite = !widget.product.isFavourite;
+                  setState(() {});
+                },
                 child: Container(
                   padding:
                       EdgeInsets.all(SizeConfig.getProportionateScreenWidth(4)),

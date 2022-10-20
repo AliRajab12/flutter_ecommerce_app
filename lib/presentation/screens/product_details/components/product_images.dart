@@ -17,18 +17,17 @@ class _ProductImagesState extends State<ProductImages> {
   late PageController _pageController;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _pageController = PageController(viewportFraction: 0.6);
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin:  (SizeConfig.orientation == Orientation.portrait ) ?
-      EdgeInsets.only(top: SizeConfig.getProportionateScreenHeight(5))
-      : EdgeInsets.only(top: SizeConfig.getProportionateScreenHeight(40))
-      ,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+      margin: (SizeConfig.orientation == Orientation.portrait)
+          ? EdgeInsets.only(top: SizeConfig.getProportionateScreenHeight(5))
+          : EdgeInsets.only(top: SizeConfig.getProportionateScreenHeight(40)),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       // decoration: BoxDecoration(
       //   border: Border.all(color: Colors.red)
       // ),
@@ -48,9 +47,11 @@ class _ProductImagesState extends State<ProductImages> {
                 aspectRatio: 0.88,
                 child: Image.asset(widget.product.images[index]),
               ),
-              ),
+            ),
           ),
-          SizedBox(height: SizeConfig.getProportionateScreenHeight(25),),
+          SizedBox(
+            height: SizeConfig.getProportionateScreenHeight(25),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

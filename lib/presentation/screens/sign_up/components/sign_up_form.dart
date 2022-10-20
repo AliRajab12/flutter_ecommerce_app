@@ -1,57 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:store/constants/colors.dart';
-import 'package:store/presentation/widgets/custom_suffix_icon.dart';
-import 'package:store/presentation/widgets/default_button.dart';
-import 'package:store/presentation/widgets/form_errors.dart';
-import 'package:store/Utilities/size_config.dart';
 import 'package:store/constants/form_messages.dart';
-import 'package:store/presentation/screens/complete_profile/complete_profile.dart';
+import 'package:store/presentation/widgets/custom_button.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
 
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-
   final _formKey = GlobalKey<FormState>();
-  final _formEmailFieldKey = GlobalKey<FormFieldState>();
-  final _formPasswordFieldKey = GlobalKey<FormFieldState>();
-  final _formconfirmPasswordFieldKey = GlobalKey<FormFieldState>();
-  String? email,password,confirmPassword;
-  late FocusNode passwordNode, confirmPasswordNode;
+  final _emailFormFieldKey = GlobalKey<FormFieldState>();
+  final _passwordFormFieldKey = GlobalKey<FormFieldState>();
+  final _confirmPasswordFormFieldKey = GlobalKey<FormFieldState>();
+  String? email, password, confirmedPassword;
+  late FocusNode passwordFocusNode, confirmPasswordFocusNode;
   @override
   void initState() {
     super.initState();
-    passwordNode = FocusNode();
-    confirmPasswordNode = FocusNode();
+    passwordFocusNode = FocusNode();
+    confirmPasswordFocusNode = FocusNode();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25,),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: Form(
+        key: _formKey,
         child: Column(
           children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
             emailFormField(),
-            SizedBox(height: SizeConfig.getProportionateScreenHeight(30),),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
             passwordFormField(),
-            SizedBox(height: SizeConfig.getProportionateScreenHeight(30),),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
             confirmPasswordFormField(),
-            SizedBox(height: SizeConfig.getProportionateScreenHeight(40)),
-            DefaultButton(
-              text: "Continue",
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            CustomButton(
+              title: "Continue",
               backgroundColor: primaryColor,
               forgroundColor: Colors.white,
+              width: MediaQuery.of(context).size.width * 0.85,
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  // if all are valid then go to success screen
-                  Navigator.pushNamed(context, CompleteProfileScreen.routeName,
-                      arguments: ScreenArgs(email: email!, password: password!));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Email: $email \nPassword: $password ")));
                 }
               },
             ),
@@ -60,107 +68,101 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
     );
   }
-  TextFormField emailFormField(){
+
+  TextFormField emailFormField() {
     return TextFormField(
-      key: _formEmailFieldKey,
-      autofocus: true,
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (newEmail){
+      key: _emailFormFieldKey,
+      onSaved: (newEmail) {
         setState(() {
           email = newEmail;
         });
       },
-      onFieldSubmitted: (newEmail){
-        passwordNode.requestFocus();
+      onChanged: (newEmail) {
+        _emailFormFieldKey.currentState!.validate();
       },
-      onChanged: (newEmail){
-        _formEmailFieldKey.currentState!.validate();
-        email = newEmail;
+      onFieldSubmitted: (newEmail) {
+        passwordFocusNode.requestFocus();
       },
-      validator: (value) {
-        if (value!.isEmpty) {
+      keyboardType: TextInputType.emailAddress,
+      decoration: const InputDecoration(
+          labelText: "Email",
+          hintText: "Enter your email",
+          suffixIcon: Icon(Icons.email)),
+      validator: (newEmail) {
+        if (newEmail!.isEmpty) {
           return kEmailNullError;
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
+        } else if (!emailValidatorRegExp.hasMatch(newEmail)) {
           return kInvalidEmailError;
         }
         return null;
       },
-      decoration: const InputDecoration(
-        labelText: "Email",
-        hintText: "Enter your email",
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon:  CustomSuffixIcon(svgIconPath: "assets/icons/Mail.svg"),
-      ),
     );
   }
-  TextFormField passwordFormField(){
-    return TextFormField(
-      key: _formPasswordFieldKey,
-      // Hide field contents
-      obscureText: true,
-      focusNode: passwordNode,
-      onSaved: (newValue) => password = newValue,
-      onChanged: (passwordText){
-        _formPasswordFieldKey.currentState!.validate();
-        password = passwordText;
-      },
 
-      onFieldSubmitted: (passwordText){
-        confirmPasswordNode.requestFocus();
+  TextFormField passwordFormField() {
+    return TextFormField(
+      key: _passwordFormFieldKey,
+      focusNode: passwordFocusNode,
+      onChanged: (newPassword) {
+        _passwordFormFieldKey.currentState!
+            .validate(); // call passowrd field validator
+        password = newPassword;
       },
-      validator: (password){
-        if(password!.isEmpty){
+      onFieldSubmitted: (newPassword) {
+        confirmPasswordFocusNode.requestFocus();
+      },
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: false,
+      decoration: const InputDecoration(
+          labelText: "Password",
+          hintText: "Enter your password",
+          suffixIcon: Icon(Icons.lock)),
+      validator: (newPassword) {
+        if (newPassword!.isEmpty) {
           return kPasswordNullError;
-        }else if(password.length < 8){
+        } else if (newPassword.length < 8) {
           return kShortPasswordError;
         }
         return null;
       },
-      decoration: const InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: CustomSuffixIcon(svgIconPath: "assets/icons/Lock.svg"),
-      ),
     );
   }
 
-
-  TextFormField confirmPasswordFormField(){
+  TextFormField confirmPasswordFormField() {
     return TextFormField(
-      key: _formconfirmPasswordFieldKey,
-      // Hide field contents
-      obscureText: true,
-      focusNode: confirmPasswordNode,
-      onSaved: (newValue) => confirmPassword = newValue,
-      onChanged: (passwordText){
-        _formconfirmPasswordFieldKey.currentState!.validate();
-        confirmPassword = passwordText;
+      key: _confirmPasswordFormFieldKey,
+      focusNode: confirmPasswordFocusNode,
+      onChanged: (newPassword) {
+        _confirmPasswordFormFieldKey.currentState!
+            .validate(); // call confirm passowrd field validator
+        confirmedPassword = newPassword;
       },
-      validator: (passwordText){
-        if(passwordText!.isEmpty){
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: false,
+      decoration: const InputDecoration(
+          labelText: "Confrim Password",
+          hintText: "Re-Enter your password",
+          suffixIcon: Icon(Icons.lock)),
+      validator: (newPassword) {
+        if (newPassword!.isEmpty) {
           return kPasswordNullError;
-        }else if(password != passwordText){
+        } else if (newPassword != password) {
           return kPasswordMatchError;
         }
         return null;
       },
-      decoration: const InputDecoration(
-        labelText: "Confirm Password",
-        hintText: "Re-Enter your password",
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: CustomSuffixIcon(svgIconPath: "assets/icons/Lock.svg"),
-      ),
     );
   }
-@override
+
+  @override
   void dispose() {
-    passwordNode.dispose();
-    confirmPasswordNode.dispose();
+    passwordFocusNode.dispose();
+    confirmPasswordFocusNode.dispose();
     super.dispose();
   }
 }
-class ScreenArgs{
+
+class ScreenArgs {
   final String email;
   final String password;
   const ScreenArgs({required this.email, required this.password});

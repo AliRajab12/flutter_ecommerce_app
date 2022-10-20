@@ -4,19 +4,18 @@ import 'package:store/constants/colors.dart';
 import 'components/sign_up_body.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = "/sign_up";
+  static const String routeName = "/signUp";
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar:AppBar(
+      appBar: AppBar(
+        title: const Text("Sign With Us"),
         centerTitle: true,
         backgroundColor: primaryColor,
-        title: const Text("Sign With Us"),
       ),
-      body: SignUpBody(),
+      body: const SignUpBody(),
     );
   }
 }

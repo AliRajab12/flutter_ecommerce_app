@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:store/data/models/product.dart';
-import 'package:store/Utilities/size_config.dart';
 import 'components/custom_app_bar.dart';
 import 'components/product_details_content.dart';
 
@@ -20,7 +19,6 @@ class ProductDetailsScreen extends StatelessWidget {
         child: CustomAppBar(
           productId: product.id,
           isProductFavourite: product.isFavourite,
-
         ),
       ),
       body: DetailsScreenContent(product: product),

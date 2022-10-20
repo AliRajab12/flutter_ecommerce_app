@@ -14,11 +14,11 @@ const productHeadlineStyle = TextStyle(
   fontWeight: FontWeight.w700,
 );
 
-const textStyle  =  TextStyle(
-    color: Color(0xff5956e9),
-    fontSize: 15,
-    fontFamily: "Raleway",
-    fontWeight: FontWeight.w700,
+const textStyle = TextStyle(
+  color: Color(0xff5956e9),
+  fontSize: 15,
+  fontFamily: "Raleway",
+  fontWeight: FontWeight.w700,
 );
 
 const drawerItemTextStyle = TextStyle(
@@ -51,4 +51,10 @@ const priceTextStyle = TextStyle(
   color: Color(0xff5956e9),
   fontSize: 18,
   fontWeight: FontWeight.w700,
+);
+
+const TextStyle splashHeadingTextStyle = TextStyle(
+  fontSize: 55,
+  fontWeight: FontWeight.w800,
+  color: Colors.white,
 );

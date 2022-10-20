@@ -11,10 +11,10 @@ import 'package:store/constants/form_messages.dart';
 import 'package:store/presentation/screens/otp_screen/otp_screen.dart';
 import 'package:store/presentation/screens/sign_up/components/sign_up_form.dart';
 
-
 class CompleteProfileForm extends StatefulWidget {
   final ScreenArgs userData;
-  const CompleteProfileForm({Key? key,required this.userData}) : super(key: key);
+  const CompleteProfileForm({Key? key, required this.userData})
+      : super(key: key);
 
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
@@ -36,12 +36,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   @override
   void initState() {
-
     super.initState();
     lastNameNode = FocusNode();
     phoneNode = FocusNode();
     addressNode = FocusNode();
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -63,33 +63,35 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               text: "continue",
               backgroundColor: primaryColor,
               forgroundColor: Colors.white,
-              onPressed: () async{
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  try{
-                    bool result = await _sqliteDbHelper.checkEmail(email: widget.userData.email);
+                  try {
+                    bool result = await _sqliteDbHelper.checkEmail(
+                        email: widget.userData.email);
 
-                        if(result){
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("The email is already existed please try with another one"),
-                                backgroundColor: Colors.black38,
-                              )
-                          );
-                        }else{
-                          User user = User(firstName: firstName!,
-                              lastName: lastName!,
-                              phoneNumber: phoneNumber!,
-                              address: address!,
-                              email: widget.userData.email,
-                              password: widget.userData.password);
-                              await _sqliteDbHelper.insertUser(user);
-                              Navigator.push(context,
-                              CustomScaleTransition(nextPageUrl: OTPScreen.routeName,
-                                  nextPage: const OTPScreen()));
-                        }
-                  }on Exception{
-                }
-
+                    if (result) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(
+                            "The email is already existed please try with another one"),
+                        backgroundColor: Colors.black38,
+                      ));
+                    } else {
+                      User user = User(
+                          firstName: firstName!,
+                          lastName: lastName!,
+                          phoneNumber: phoneNumber!,
+                          address: address!,
+                          email: widget.userData.email,
+                          password: widget.userData.password);
+                      await _sqliteDbHelper.insertUser(user);
+                      Navigator.push(
+                          context,
+                          CustomScaleTransition(
+                              nextPageUrl: OTPScreen.routeName,
+                              nextPage: const OTPScreen()));
+                    }
+                  } on Exception {}
                 }
               },
             ),
@@ -104,30 +106,31 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       key: _addressFormFieldKey,
       onSaved: (newAddress) => address = newAddress,
       onChanged: (newAddress) {
-
         _addressFormFieldKey.currentState!.validate();
         address = newAddress;
       },
       focusNode: addressNode,
       validator: (newAddress) {
         if (newAddress!.isEmpty) {
-          // addError(error: kAddressNullError);
           return kAddressNullError;
         }
+        return null;
       },
       decoration: const InputDecoration(
         labelText: "Address",
         hintText: "Enter your address",
         floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: CustomSuffixIcon(svgIconPath: "assets/icons/Location point.svg"),
+        suffixIcon:
+            CustomSuffixIcon(svgIconPath: "assets/icons/Location point.svg"),
       ),
     );
   }
+
   TextFormField phoneNumberFormField() {
     return TextFormField(
       key: _phoneNumberFormFieldKey,
       keyboardType: TextInputType.phone,
-      onFieldSubmitted: (newValue){
+      onFieldSubmitted: (newValue) {
         addressNode.requestFocus();
       },
       focusNode: phoneNode,
@@ -138,11 +141,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       },
       validator: (newPhoneNumber) {
         if (newPhoneNumber!.isEmpty) {
-          // addError(error: kPhoneNumberNullError);
           return kPhoneNumberNullError;
-        }else if(!phoneNumberValidatorRegExp.hasMatch(newPhoneNumber)){
+        } else if (!phoneNumberValidatorRegExp.hasMatch(newPhoneNumber)) {
           return kValidPhoneNumberError;
         }
+        return null;
       },
       decoration: const InputDecoration(
         labelText: "Phone Number",
@@ -159,7 +162,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     return TextFormField(
       key: _firstNameFormFieldKey,
       autofocus: true,
-      onFieldSubmitted: (value){
+      onFieldSubmitted: (value) {
         lastNameNode.requestFocus();
       },
       onSaved: (newFirstName) => firstName = newFirstName,
@@ -169,18 +172,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       },
       validator: (newFirstName) {
         if (newFirstName!.isEmpty) {
-          // addError(error: kNameNullError);
           return kFirstNameNullError;
         }
-        // firstName = newFName;
+        return null;
       },
       decoration: const InputDecoration(
         labelText: "First Name",
         hintText: "Enter your first name",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon:  CustomSuffixIcon(svgIconPath: "assets/icons/User.svg"),
+        suffixIcon: CustomSuffixIcon(svgIconPath: "assets/icons/User.svg"),
       ),
     );
   }
@@ -188,35 +187,28 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField lastNameFormField() {
     return TextFormField(
       key: _lastNameFormFieldKey,
-      onFieldSubmitted: (value){
+      onFieldSubmitted: (value) {
         phoneNode.requestFocus();
       },
       onSaved: (newLastName) => lastName = newLastName,
       onChanged: (newLastName) {
-        // if (newLName.isNotEmpty) {
-        //   removeError(error: kNameNullError);
-        // }
         _lastNameFormFieldKey.currentState!.validate();
         lastName = newLastName;
       },
       focusNode: lastNameNode,
       validator: (newLastName) {
         if (newLastName!.isEmpty) {
-          // addError(error: kNameNullError);
           return kLastNameNullError;
         }
-        // lastName = newLName;
+        return null;
       },
       decoration: const InputDecoration(
         labelText: "Last Name",
         hintText: "Enter your last name",
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon:  CustomSuffixIcon(svgIconPath: "assets/icons/User.svg"),
+        suffixIcon: CustomSuffixIcon(svgIconPath: "assets/icons/User.svg"),
       ),
     );
   }
-
-
 
   @override
   void dispose() {

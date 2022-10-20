@@ -1,71 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:store/Utilities/size_config.dart';
 import 'package:store/constants/colors.dart';
+import 'package:store/presentation/widgets/custom_circle.dart';
 
 class WelcomeBack extends StatelessWidget {
   const WelcomeBack({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: SizeConfig.getProportionateScreenHeight(250),
+    return Container(
+      color: primaryColor,
+      height: MediaQuery.of(context).size.height * 0.3,
       child: Stack(
-           children: [
-               Container(
-                  color: primaryColor,
-                  ),
-               Positioned(
-                   top: 10,
-                   left: SizeConfig.getProportionateScreenWidth(100),
-                   child: Container(
-                   width: SizeConfig.getProportionateScreenWidth(27),
-                   height: SizeConfig.getProportionateScreenWidth(27),
-                   decoration: BoxDecoration(
-                         shape: BoxShape.circle,
-                         border: Border.all(color: const Color(0xff706dfc), width: 6, ),
-                           ),
-                        ),
-                    ),
-                Positioned(
-                   top: -70,
-                   right: SizeConfig.getProportionateScreenWidth(10),
-                   child: Container(
-                           width: SizeConfig.getProportionateScreenWidth(125),
-                           height: SizeConfig.getProportionateScreenWidth(125),
-                           decoration: BoxDecoration(
-                               shape: BoxShape.circle,
-                                 border: Border.all(color: const Color(0xff706dfc), ),
-                                 gradient: circleGradientColor
-                               ),
-                             ),
-                           ),
-               const Positioned.fill(
-                     child: Align(
-                     alignment: Alignment.center,
-                         child: Text(
-                             "Welcome\nBack",
-                               style: TextStyle(
-                               color: Colors.white,
-                               fontSize: 55,
-                               fontWeight: FontWeight.w800,
-                            ),
-                            )
-                          ),
-                       ),
-                    Positioned(
-                       bottom: 25,
-                       right: SizeConfig.getProportionateScreenWidth(50),
-                       child: Container(
-                         width: SizeConfig.getProportionateScreenWidth(35),
-                         height: SizeConfig.getProportionateScreenWidth(35),
-                         decoration: BoxDecoration(
-                             shape: BoxShape.circle,
-                             border: Border.all(color: const Color(0xff706dfc), width: 6, ),
-                         ),
-                    ),
-                 ),
-                ],
+        children: [
+          Positioned(
+              top: MediaQuery.of(context).size.height * 0.03,
+              left: MediaQuery.of(context).size.width * 0.25,
+              child: const CustomCircle(
+                width: 25,
+                height: 25,
+                color: primaryColor,
+              )),
+          Positioned(
+              top: MediaQuery.of(context).size.height * -0.065,
+              right: MediaQuery.of(context).size.width * 0.03,
+              child: const CustomCircle(
+                width: 125,
+                height: 125,
+                gradient: circleGradientColor,
+                color: circleColor,
+                borderWidth: 2,
+              )),
+          const Align(
+            alignment: Alignment.center,
+            child: Text(
+              "Welcome\nBack",
+              style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 55,
+                  color: Colors.white),
             ),
+          ),
+          Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.06,
+              right: MediaQuery.of(context).size.width * 0.18,
+              child: const CustomCircle(
+                width: 35,
+                height: 35,
+                color: primaryColor,
+                borderWidth: 4,
+              )),
+        ],
+      ),
     );
   }
 }

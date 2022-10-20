@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/presentation/bloc/favorite/favorite_event.dart';
 import 'package:store/presentation/widgets/custom_app_bar.dart';
-import 'package:store/Utilities/size_config.dart';
 import 'package:store/presentation/bloc/favorite/favorite_bloc.dart';
 import 'package:store/presentation/screens/favourite/components/no_favorite_item.dart';
 import 'package:store/presentation/bloc/favorite/favorite_state.dart';
