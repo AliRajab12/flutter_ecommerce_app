@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:store/presentation/screens/home/components/popular_product.dart';
 import 'package:store/presentation/widgets/custom_bottom_navbar.dart';
-import 'package:store/Utilities/size_config.dart';
 import 'package:store/constants/colors.dart';
 import 'package:store/constants/enums.dart';
 import 'components/categories.dart';
-import 'components/order_online_text.dart';
-import 'components/search_field.dart';
+import '../../widgets/search_field.dart';
 import 'components/special_offers.dart';
+import 'components/text_banner.dart';
 
 class HomeContent extends StatefulWidget {
   const HomeContent({Key? key}) : super(key: key);
@@ -18,10 +17,16 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
-  double xOffset = 0.0;
-  double yOffset = 0.0;
-  double scaleFactor = 1;
-  bool isDrawerOpen = false;
+  late double xOffset, yOffset, scaleFactor;
+  late bool isDrawerOpen;
+
+  @override
+  void initState() {
+    super.initState();
+    xOffset = yOffset = 0.0;
+    scaleFactor = 1.0;
+    isDrawerOpen = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,55 +42,52 @@ class _HomeContentState extends State<HomeContent> {
             boxShadow: [if (isDrawerOpen) drawerShadow]),
         child: ListView(
           children: [
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
-            // Home Page header component
+            // Header component
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getProportionateScreenWidth(40)),
-              // Row contains three widgets Search Bar
+                  horizontal: MediaQuery.of(context).size.width * 0.08),
               child: Row(
                 children: [
-                  // Search field that allows user to find a specific product
                   isDrawerOpen
                       ? IconButton(
                           icon: const Icon(Icons.arrow_back_ios),
                           onPressed: () {
                             setState(() {
-                              xOffset = 0;
-                              yOffset = 0;
+                              xOffset = 0.0;
+                              yOffset = 0.0;
                               scaleFactor = 1;
                               isDrawerOpen = false;
                             });
                           },
                         )
                       : IconButton(
-                          icon: SvgPicture.asset(
-                            "assets/icons/hamburger.svg",
-                            width: SizeConfig.getProportionateScreenWidth(20),
-                            height: SizeConfig.getProportionateScreenHeight(20),
-                          ),
+                          icon: SvgPicture.asset("assets/icons/hamburger.svg"),
                           onPressed: () {
                             setState(() {
                               xOffset =
-                                  SizeConfig.getProportionateScreenHeight(230);
+                                  MediaQuery.of(context).size.width * 0.55;
                               yOffset =
-                                  SizeConfig.getProportionateScreenHeight(150);
+                                  MediaQuery.of(context).size.height * 0.2;
                               scaleFactor = 0.6;
                               isDrawerOpen = true;
                             });
-                          }),
+                          },
+                        ),
                   SizedBox(
-                    width: SizeConfig.getProportionateScreenWidth(20),
+                    width: MediaQuery.of(context).size.width * 0.04,
                   ),
-                  SearchField(),
+                  Expanded(
+                    // take the remaining space of the row
+                    child: SearchField(),
+                  )
                 ],
               ),
             ),
-            const SizedBox(height: 10),
-            // Discount banner component
-            const OrderOnlineText(),
+            // Banner component
+            const TextBanner(),
             // Categories component
             Categories(),
             // Special Offers component

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:store/Utilities/size_config.dart';
 
+import 'colors.dart';
+
 final headingStyle = TextStyle(
   fontSize: SizeConfig.getProportionateScreenWidth(28),
   fontWeight: FontWeight.bold,
@@ -58,3 +60,8 @@ const TextStyle splashHeadingTextStyle = TextStyle(
   fontWeight: FontWeight.w800,
   color: Colors.white,
 );
+const TextStyle kBannerTextStyle =
+    TextStyle(fontSize: 34, fontWeight: FontWeight.w700, color: Colors.black);
+
+const TextStyle kSearchFieldTextStyle = TextStyle(
+    fontWeight: FontWeight.w600, color: searchFieldTextColor, fontSize: 17);

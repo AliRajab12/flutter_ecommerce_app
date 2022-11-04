@@ -11,6 +11,8 @@ const Color socialCardBgColor = Color(0xFFF5F6F9);
 
 const Color inActiveIconColor = Color(0xFFB6B6B6);
 
+const Color searchFieldTextColor = Color(0xff858585);
+
 const primaryGradientColor = LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,

@@ -1,13 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:store/Utilities/size_config.dart';
 import 'package:store/constants/colors.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Icon? icon;
   final GestureTapCallback? onIconTapped;
-  const CustomAppBar({Key? key, required this.title,this.icon,this.onIconTapped}) : super(key: key);
+  const CustomAppBar(
+      {Key? key, required this.title, this.icon, this.onIconTapped})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
-              children:  [
+              children: [
                 SizedBox(
                   width: SizeConfig.getProportionateScreenWidth(40),
                   height: SizeConfig.getProportionateScreenWidth(40),
@@ -30,7 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40)),
-                      primary: primaryColor,
+                      foregroundColor: primaryColor,
                       // backgroundColor: Colors.white,
                       padding: EdgeInsets.zero,
                     ),
@@ -41,9 +42,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
                     ),
                   ),
                 ),
-                 Container(
-                   margin: EdgeInsets.only(right: (icon != null)? 0 : 40),
-                   child: Text(
+                Container(
+                  margin: EdgeInsets.only(right: (icon != null) ? 0 : 40),
+                  child: Text(
                     title,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
@@ -51,20 +52,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
+                  ),
                 ),
-                 ),
-                  (icon != null)?
-                    SizedBox(
-                      width: SizeConfig.getProportionateScreenWidth(40),
-                      height: SizeConfig.getProportionateScreenWidth(40),
-                      child: InkWell(
-                        splashColor: Colors.redAccent,
-                        onTap: onIconTapped,
-                        borderRadius: BorderRadius.circular(40),
-                        child:  const Icon(Icons.restore_from_trash,color: Colors.redAccent,),
-                      ),
-                    ) :
-                  Container()
+                (icon != null)
+                    ? SizedBox(
+                        width: SizeConfig.getProportionateScreenWidth(40),
+                        height: SizeConfig.getProportionateScreenWidth(40),
+                        child: InkWell(
+                          splashColor: Colors.redAccent,
+                          onTap: onIconTapped,
+                          borderRadius: BorderRadius.circular(40),
+                          child: const Icon(
+                            Icons.restore_from_trash,
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      )
+                    : Container()
               ],
             ),
           ),
@@ -74,6 +78,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height + SizeConfig.getProportionateScreenHeight(40));
+  Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height +
+      SizeConfig.getProportionateScreenHeight(40));
 }
-

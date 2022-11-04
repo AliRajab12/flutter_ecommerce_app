@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:store/Utilities/size_config.dart';
 import 'package:store/constants/colors.dart';
 
-
 class CustomBackButton extends StatelessWidget {
   const CustomBackButton({Key? key}) : super(key: key);
 
@@ -17,9 +16,9 @@ class CustomBackButton extends StatelessWidget {
         height: SizeConfig.getProportionateScreenWidth(40),
         child: TextButton(
           style: TextButton.styleFrom(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40)),
-            primary: primaryColor,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+            foregroundColor: primaryColor,
             // backgroundColor: Colors.white,
             padding: EdgeInsets.zero,
           ),
